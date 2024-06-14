@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from openpyxl.workbook import Workbook
 
 # Definition of the class Openspace
 
@@ -63,7 +64,8 @@ class Openspace:
             self.tables[i].seats[j].set_occupant(name)
             
         for i, j in seats_index_list:
-            self.tables[i].seats[j] = ""
+            self.tables[i].seats[j].set_occupant("")
+            self.tables[i].seats[j].remove_occupant()
     
     def display(self):
         """
@@ -74,7 +76,7 @@ class Openspace:
             if table.left_capacity() == 4:
                 display_list.append(f"Table_{i+1} is unoccupied.")
             else:
-                display_list.append(f"The occupants of table_{i+1} are: " + ", ".join(table.seats))
+                display_list.append(f"The occupants of table_{i+1} are: " + ", ".join([seat.occupant for seat in table.seats if not seat.free]))
         print("\n".join(display_list))
     
     def store(self, filename):
@@ -85,4 +87,4 @@ class Openspace:
         for i, table in enumerate(self.tables):
                 dict_excel[f"Table_{i+1}"] = list(table.seats[k].occupant for k in range(4) if table.seats[k].free == False)
         df = pd.DataFrame(data = dict_excel)
-        df.pd.to_excel(filename, index = True)
+        df.to_excel(filename, index = False)
