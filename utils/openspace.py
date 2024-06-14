@@ -6,7 +6,7 @@ from openpyxl.workbook import Workbook
 
 # First, we import the class Table from the module table
 
-from table import Table
+from utils.table import Table
 from random import shuffle
 
 

@@ -3,12 +3,12 @@
 
 ##Here is the final version of `main.py` with the error handling:
 import sys
-from utils.openspace import OpenSpace
-from utils.file_utils import load_people
+from utils.openspace import Openspace
+from utils.file_utils import collugues_excel
 
 def main(filepath):
     try:
-        names = load_people(filepath)
+        names = collugues_excel(filepath)
     except FileNotFoundError:
         print(f"Error: The file '{filepath}' was not found.")
         return
@@ -20,10 +20,10 @@ def main(filepath):
         return
 
     try:
-        openspace = OpenSpace()
+        openspace = Openspace()
         openspace.organize(names)
         openspace.display()
-        openspace.store("assigned_seats.xlsx")
+        openspace.store("colleagues.xlsx")
     except Exception as e:
         print(f"An unexpected error occurred during the organization process: {e}")
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         filepath = sys.argv[1]
     else:
         # Hardcoded path to the Excel file
-        filepath = "C:\\Users\\YourUsername\\Desktop\\copy.xlsx"
+        filepath = r"/Users/mustafagul/Desktop/challenge-openspace-classifier 13.57.47/colleagues.xlsx"
         # For Mac/Linux, use the following path format:
         # filepath = "/Users/YourUsername/Desktop/copy.xlsx"
     
